@@ -3,10 +3,12 @@ package com.grocery.controllers;
 import com.grocery.models.Cart;
 import com.grocery.models.Product;
 import com.grocery.models.User;
+import com.grocery.payload.request.user_request.AddToCartRequest;
 import com.grocery.payload.request.user_request.EditAccountDetailsRequest;
 import com.grocery.payload.response.auth_response.MessageResponse;
 import com.grocery.payload.response.user_response.AccountDetailsResponse;
 import com.grocery.payload.response.user_response.ShopsResponse;
+import com.grocery.payload.response.user_response.ShowCartItemsResponse;
 import com.grocery.repository.CartRepository;
 import com.grocery.repository.ProductRepository;
 import com.grocery.repository.UserRepository;
@@ -134,12 +136,12 @@ public class CustomerController {
 
     @PostMapping("/buyer/cart/{id}")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<?> addToCart(@PathVariable("id") Long id) {
+    public ResponseEntity<?> addToCart(@PathVariable("id") Long id,@RequestBody AddToCartRequest addToCartRequest) {
         Product product = productRepository.findById(id).get();
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
         User user = userRepository.findByUsername(username).get();
-        Cart cart = new Cart(product.getShopname(), product.getItemname(), product.getItemprice(), user.getId());
+        Cart cart = new Cart(product.getShopname(), product.getItemname(), product.getItemprice(), user.getId(),addToCartRequest.getQuantity());
         cartRepository.save(cart);
         return ResponseEntity.ok(new MessageResponse("Item Added to Cart!"));
     }
@@ -151,7 +153,14 @@ public class CustomerController {
         String username = userDetails.getUsername();
         User user = userRepository.findByUsername(username).get();
         List<Cart> cart = cartRepository.findAllByUserid(user.getId());
-        return ResponseEntity.ok(cart);
+        Long total = 0L;
+        for(int i=0;i< cart.size();i++){
+            Long item_price = Long.parseLong(cart.get(i).getItemprice());
+            Long quantity = Long.parseLong(cart.get(i).getQuantity());
+            total = total + item_price*quantity;
+        }
+        ShowCartItemsResponse show = new ShowCartItemsResponse(cart,total);
+        return ResponseEntity.ok(show);
     }
 
 

@@ -9,20 +9,22 @@ public class Cart {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private  String shopname;
+    private String shopname;
     private String itemname;
     private String itemprice;
     private Long userid;
+    private String quantity;
 
     public Cart() {
 
     }
 
-    public Cart(String shopname, String itemname, String itemprice, Long userid) {
+    public Cart(String shopname, String itemname, String itemprice, Long userid, String quantity) {
         this.shopname = shopname;
         this.itemname = itemname;
         this.itemprice = itemprice;
         this.userid = userid;
+        this.quantity = quantity;
     }
 
     public Long getId() {
@@ -63,5 +65,13 @@ public class Cart {
 
     public void setUserid(Long userid) {
         this.userid = userid;
+    }
+
+    public String getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(String quantity) {
+        this.quantity = quantity;
     }
 }
