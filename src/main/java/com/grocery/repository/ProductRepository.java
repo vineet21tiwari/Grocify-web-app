@@ -10,6 +10,7 @@ import java.util.Optional;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAllByUserid(Long userid);
+    Optional<Product> findById(Long id);
 
 
     Optional<Product> findByUserid(Long userid);

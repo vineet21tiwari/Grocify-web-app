@@ -1,10 +1,13 @@
 package com.grocery.controllers;
 
+import com.grocery.models.Cart;
+import com.grocery.models.Product;
 import com.grocery.models.User;
 import com.grocery.payload.request.user_request.EditAccountDetailsRequest;
 import com.grocery.payload.response.auth_response.MessageResponse;
 import com.grocery.payload.response.user_response.AccountDetailsResponse;
 import com.grocery.payload.response.user_response.ShopsResponse;
+import com.grocery.repository.CartRepository;
 import com.grocery.repository.ProductRepository;
 import com.grocery.repository.UserRepository;
 import com.grocery.security.jwt.JwtUtils;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -37,6 +41,9 @@ public class CustomerController {
 
     @Autowired
     UserRepository userRepository;
+
+    @Autowired
+    CartRepository cartRepository;
 
     @Autowired
     ProductRepository productRepository;
@@ -110,16 +117,44 @@ public class CustomerController {
        //List<ShopsResponse> shopsResponse;
        List<ShopsResponse> shopsResponse = new ArrayList<ShopsResponse>();
 
-
        for (int i = 0; i < sellers.size(); i++) {
            ShopsResponse response = new ShopsResponse(sellers.get(i).getId(), sellers.get(i).getShopname(),
                    sellers.get(i).getMobile(),sellers.get(i).getFirst_name(),sellers.get(i).getLast_name());
            shopsResponse.add(response);
        }
-
        return ResponseEntity.ok(shopsResponse);
-
    }
+
+    @GetMapping("/buyer/shops/{id}")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<?> showShopDetail(@PathVariable("id") Long id) {
+        List<Product> product = productRepository.findAllByUserid(id);
+        return ResponseEntity.ok(product);
+    }
+
+    @PostMapping("/buyer/cart/{id}")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<?> addToCart(@PathVariable("id") Long id) {
+        Product product = productRepository.findById(id).get();
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
+        User user = userRepository.findByUsername(username).get();
+        Cart cart = new Cart(product.getShopname(), product.getItemname(), product.getItemprice(), user.getId());
+        cartRepository.save(cart);
+        return ResponseEntity.ok(new MessageResponse("Item Added to Cart!"));
+    }
+
+    @GetMapping("/buyer/cart")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<?> showCartItems() {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String username = userDetails.getUsername();
+        User user = userRepository.findByUsername(username).get();
+        List<Cart> cart = cartRepository.findAllByUserid(user.getId());
+        return ResponseEntity.ok(cart);
+    }
+
+
 
 
 
