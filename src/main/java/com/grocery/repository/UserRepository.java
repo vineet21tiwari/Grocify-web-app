@@ -32,4 +32,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
   @Query("select u from User u where u.role = ?1 and u.account_status = ?2")
   List<User> findAllByRoleAndAccount_status(String role, String account_status);
 
+  List<User> findAllByRoleAndActive(String role,String active);
+
+
 }
