@@ -39,7 +39,7 @@ public class SignupRequest {
     private String account_status;
 
 
-    
+
     private List<String> role;
     
 

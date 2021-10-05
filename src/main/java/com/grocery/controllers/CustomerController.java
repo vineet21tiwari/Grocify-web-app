@@ -163,6 +163,18 @@ public class CustomerController {
         return ResponseEntity.ok(show);
     }
 
+    @DeleteMapping ("/buyer/cart/{id}")
+    @PreAuthorize("hasRole('CUSTOMER')")
+    public ResponseEntity<?> deleteItemFromCart(@PathVariable("id") Long id) {
+
+        Cart cart = cartRepository.findById(id).get();
+        if(cart!=null){
+            cartRepository.delete(cart);
+            return ResponseEntity.ok(new MessageResponse("Item deleted successfully!"));}
+        else
+            return ResponseEntity.ok(new MessageResponse("Item Not Found!"));
+    }
+
 
 
 

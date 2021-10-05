@@ -47,8 +47,17 @@ class CustomerControllerTest {
                                            productRepository );
     }
 
+    @AfterEach
+    void tearDown() {
+        userRepository.deleteAll();
+    }
+
     @Test
     void accountDetails() {
+        given(jwtUtils.getUserNameFromJwtToken(anyString())).willReturn(String.valueOf("chay"));
+        undertest.accountDetails();
+        verify(userRepository).findByUsername(new String("customer1"));
+
 
     }
 

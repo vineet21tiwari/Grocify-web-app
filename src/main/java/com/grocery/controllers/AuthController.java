@@ -59,11 +59,9 @@ public class AuthController {
   @Autowired
   RefreshTokenService refreshTokenService;
 
-  public AuthController(UserRepository userRepository) {
 
-  }
 
-    @PostMapping("/signin")
+  @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
     User user = userRepository.findByUsername(loginRequest.getUsername()).get();
     if(Objects.equals(user.getActive(), "0"))
@@ -110,6 +108,13 @@ public class AuthController {
       for (int i = 0; i < strRoles.size(); i++) {
         if (Objects.equals(strRoles.get(i), "seller")) {
           role = "2";
+          try{
+            roleRepository.findByName(ERole.ROLE_SELLER);
+            roleRepository.findByName(ERole.ROLE_CUSTOMER);
+          } catch(NullPointerException e ){
+            return ResponseEntity.ok(new MessageResponse("NUll pointer exception!"));
+
+          }
           Role userRole = roleRepository.findByName(ERole.ROLE_SELLER)
                   .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
           roles.add(userRole);
