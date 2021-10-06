@@ -59,7 +59,11 @@ public class AuthController {
   @Autowired
   RefreshTokenService refreshTokenService;
 
-
+  public AuthController(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder encoder) {
+    this.userRepository = userRepository;
+    this.roleRepository = roleRepository;
+    this.encoder = encoder;
+  }
 
   @PostMapping("/signin")
   public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
@@ -108,49 +112,28 @@ public class AuthController {
       for (int i = 0; i < strRoles.size(); i++) {
         if (Objects.equals(strRoles.get(i), "seller")) {
           role = "2";
-          try{
-            roleRepository.findByName(ERole.ROLE_SELLER);
-            roleRepository.findByName(ERole.ROLE_CUSTOMER);
-          } catch(NullPointerException e ){
-            return ResponseEntity.ok(new MessageResponse("NUll pointer exception!"));
-
-          }
-          Role userRole = roleRepository.findByName(ERole.ROLE_SELLER)
-                  .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+          Role userRole = new Role();
+          userRole.setId(2);
+          userRole.setName("seller");
           roles.add(userRole);
+
+//          Role userRole = roleRepository.findByName(ERole.ROLE_SELLER)
+//                  .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+//          roles.add(userRole);
         } else {
           role = "1";
-          Role userRole = roleRepository.findByName(ERole.ROLE_CUSTOMER)
-                  .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+          Role userRole = new Role();
+          userRole.setId(1);
+          userRole.setName("customer");
           roles.add(userRole);
+
+//          Role userRole = roleRepository.findByName(ERole.ROLE_CUSTOMER)
+//                  .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+//          roles.add(userRole);
 
         }
       }
-    /*Set<Role> roles = new HashSet<>();
 
-    if (strRoles == null) {
-      Role userRole = roleRepository.findByName(ERole.ROLE_CUSTOMER)
-          .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-      roles.add(userRole);
-      role="1";
-    } else {
-      strRoles.forEach(role1 -> {
-        switch (role1) {
-        case "seller":
-          Role sellerRole = roleRepository.findByName(ERole.ROLE_SELLER)
-              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-          roles.add(sellerRole);
-
-
-          break;
-        default:
-          Role userRole = roleRepository.findByName(ERole.ROLE_CUSTOMER)
-              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-          roles.add(userRole);
-          role.set("1");
-        }
-      });
-    }*/
       User user = new User(signUpRequest.getUsername(),
               signUpRequest.getEmail(),
               encoder.encode(signUpRequest.getPassword()),

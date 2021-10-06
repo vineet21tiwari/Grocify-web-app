@@ -1,5 +1,6 @@
 package com.grocery.controllers;
 
+import java.util.Optional;
 import com.grocery.models.Product;
 import com.grocery.models.Role;
 import com.grocery.models.User;
@@ -19,10 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -47,78 +45,125 @@ public class AdminController {
     @Autowired
     ProductRepository productRepository;
 
+    public AdminController(AuthenticationManager authenticationManager,
+                           UserRepository userRepository, CartRepository cartRepository,
+                           ProductRepository productRepository) {
+        this.authenticationManager = authenticationManager;
+        this.userRepository = userRepository;
+        this.cartRepository = cartRepository;
+        this.productRepository = productRepository;
+    }
+
     @GetMapping("/admin/buyers")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> aLLBuyers() {
         List<User> user = userRepository.findAllByRoleAndActive("1","1");
-        List<AllUsersResponse> response=new ArrayList<AllUsersResponse>();;
+        List<AllUsersResponse> response=new ArrayList<AllUsersResponse>();
+        if(user!=null){
         for(int i=0;i< user.size();i++){
             response.add(new AllUsersResponse(user.get(i).getId(),user.get(i).getUsername(),user.get(i).getFirst_name(),
                     user.get(i).getLast_name()));
-        }
+        }}
         return ResponseEntity.ok(response);
     }
     @GetMapping("/admin/buyers/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> buyerDetails(@PathVariable("id") Long id) {
-        User user = userRepository.findById(id).get();
+        User user;
+        if(userRepository.findById(id).isPresent()){
+            user = userRepository.findById(id).get();}
+        else
+        { user = null;}
+        if(SecurityContextHolder.getContext().getAuthentication()!=null){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
         List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
                 .collect(Collectors.toList());
         return ResponseEntity.ok(new AccountDetailsResponse(user.getId(), user.getUsername(), user.getFirst_name(),
                 user.getLast_name(), user.getEmail(), user.getMobile(), user.getAddress(), user.getAccount_status(),
-                user.getActive(), roles));
+                user.getActive(), roles));}
+        else
+            return ResponseEntity.ok(new MessageResponse("user not found"));
+
     }
 
     @PutMapping("/admin/buyers/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deletebuyer(@PathVariable("id") Long id) {
-        User user = userRepository.findById(id).get();
-        user.setActive("0");
-        userRepository.save(user);
-        return ResponseEntity.ok(new MessageResponse("User Deleted successfully!"));
+        User user;
+        if(userRepository.findById(id).isPresent()){
+            user = userRepository.findById(id).get();
+            user.setActive("0");
+            userRepository.save(user);
+            return ResponseEntity.ok(new MessageResponse("User Deleted successfully!"));}
+        else
+        { user = null;}
+        return ResponseEntity.ok(new MessageResponse("User not found"));
     }
 
     @GetMapping("/admin/sellers")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> aLLSellers() {
         List<User> user = userRepository.findAllByRoleAndAccount_status("2","1");
-        List<AllUsersResponse> response=new ArrayList<AllUsersResponse>();;
+        List<User> user1 = new ArrayList<User>();
+        if(user!=null){
         for(int i=0;i< user.size();i++){
-            response.add(new AllUsersResponse(user.get(i).getId(),user.get(i).getUsername(),user.get(i).getFirst_name(),
-                    user.get(i).getLast_name()));
+            if(Objects.equals(user.get(i).getActive(), "1")){
+                user1.add(user.get(i));
+            }
+        }}
+        List<AllUsersResponse> response=new ArrayList<AllUsersResponse>();;
+        for(int i=0;i< user1.size();i++){
+            response.add(new AllUsersResponse(user1.get(i).getId(),user1.get(i).getUsername(),user1.get(i).getFirst_name(),
+                    user1.get(i).getLast_name()));
         }
         return ResponseEntity.ok(response);
     }
     @GetMapping("/admin/sellers/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> sellerDetails(@PathVariable("id") Long id) {
-        User user = userRepository.findById(id).get();
+        User user;
+        if(userRepository.findById(id).isPresent()){
+            user = userRepository.findById(id).get();}
+        else
+        { user = null;}
+        if(SecurityContextHolder.getContext().getAuthentication()!=null){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
         List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
                 .collect(Collectors.toList());
         return ResponseEntity.ok(new AccountDetailsResponse(user.getId(), user.getUsername(), user.getFirst_name(),
                 user.getLast_name(), user.getEmail(), user.getMobile(), user.getAddress(), user.getAccount_status(),
-                user.getActive(), roles));
+                user.getActive(), roles));}
+        else
+            return ResponseEntity.ok(new MessageResponse("user not found"));
 
     }
     @PutMapping("/admin/sellers/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteSeller(@PathVariable("id") Long id) {
-        User user = userRepository.findById(id).get();
-        user.setActive("0");
-        userRepository.save(user);
-        return ResponseEntity.ok(new MessageResponse("User Deleted successfully!"));
+        User user;
+        if(userRepository.findById(id).isPresent()){
+            user = userRepository.findById(id).get();
+            user.setActive("0");
+            userRepository.save(user);
+            return ResponseEntity.ok(new MessageResponse("User Deleted successfully!"));}
+        else
+        { user = null;}
+        return ResponseEntity.ok(new MessageResponse("User not found"));
     }
 
     @GetMapping("/admin/sellers/items/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> sellerItemDetails(@PathVariable("id") Long id) {
-        User user = userRepository.findById(id).get();
-        List<Product> product = productRepository.findAllByUserid(id);
-        return ResponseEntity.ok(product);
+        User user;
+        if(userRepository.findById(id).isPresent()){
+            user = userRepository.findById(id).get();
+            List<Product> product = productRepository.findAllByUserid(id);
+            return ResponseEntity.ok(product);}
+        else
+        { user = null;}
+        return ResponseEntity.ok(new MessageResponse("User not found"));
     }
 
 
@@ -128,10 +173,11 @@ public class AdminController {
     public ResponseEntity<?> allPendingSellers() {
         List<User> user = userRepository.findAllByRoleAndAccount_status("2","0");
         List<AllUsersResponse> response=new ArrayList<AllUsersResponse>();;
+        if(user!=null){
         for(int i=0;i< user.size();i++){
             response.add(new AllUsersResponse(user.get(i).getId(),user.get(i).getUsername(),user.get(i).getFirst_name(),
                     user.get(i).getLast_name()));
-        }
+        }}
         return ResponseEntity.ok(response);
     }
 

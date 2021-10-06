@@ -20,6 +20,10 @@ public class SellerSignupAddItem {
         this.itemprice = itemprice;
     }
 
+    public SellerSignupAddItem() {
+
+    }
+
     public Long getId() {
         return id;
     }

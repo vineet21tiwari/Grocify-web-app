@@ -146,7 +146,7 @@ public class CustomerController {
         return ResponseEntity.ok(new MessageResponse("Item Added to Cart!"));
     }
 
-    @GetMapping("/buyer/cart")
+    @GetMapping("/buyer/cart/items")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<?> showCartItems() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
