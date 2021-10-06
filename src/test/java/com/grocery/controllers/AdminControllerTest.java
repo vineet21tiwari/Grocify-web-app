@@ -328,17 +328,125 @@ class AdminControllerTest {
 
     @Test
     void pendingSellerItemDetails() {
+        List<String> Role = new ArrayList();
+        Role.add("seller");
+        SignupRequest input = new SignupRequest();
+        Long id  = 1L;
+        input.setUsername("vineet");
+        input.setAccount_status("1");
+        input.setPassword("12345678");
+        input.setEmail("vineet@gmail.com");
+        input.setRole(Role);
+        input.setAccount_status("1");
+        input.setActive("1");
+        input.setAddress("sneha sadan");
+        input.setMobile("989333232");
+        input.setFirst_name("vineet");
+        input.setLast_name("tiwari");
+        String role = "2";
+
+        Product product = new Product();
+        product.setItemname("paneer");
+        product.setShopname("bikaner");
+        product.setItemprice("400");
+        product.setUserid(1L);
+        this.productRepository.save(product);
+
+        User user = new User(input.getUsername(), input.getEmail(), this.encoder.encode(input.getPassword()), input.getFirst_name(), input.getLast_name(), input.getAddress(), input.getMobile(), input.getActive(), input.getAccount_status(), role);
+        this.undertest1.registerUser(input);
+        this.userRepository.save(user);
+        verify(userRepository).save(user);
+
+        this.undertest.pendingSellerItemDetails(id);
+        verify(userRepository).findById(id);
+
     }
 
     @Test
     void pendingSellerDetails() {
+        List<String> Role = new ArrayList();
+        Role.add("seller");
+        SignupRequest input = new SignupRequest();
+        Long id  = 1L;
+        input.setUsername("vineet");
+        input.setAccount_status("1");
+        input.setPassword("12345678");
+        input.setEmail("vineet@gmail.com");
+        input.setRole(Role);
+        input.setAccount_status("0");
+        input.setActive("1");
+        input.setAddress("sneha sadan");
+        input.setMobile("989333232");
+        input.setFirst_name("vineet");
+        input.setLast_name("tiwari");
+        String role = "2";
+        User user = new User(input.getUsername(), input.getEmail(), this.encoder.encode(input.getPassword()), input.getFirst_name(), input.getLast_name(), input.getAddress(), input.getMobile(), input.getActive(), input.getAccount_status(), role);
+
+        this.undertest1.registerUser(input);
+        this.userRepository.save(user);
+        verify(userRepository).save(user);
+
+        this.undertest.pendingSellerDetails(id);
+        verify(userRepository).findById(id);
+
     }
 
     @Test
     void deletePendingSeller() {
+        List<String> Role = new ArrayList();
+        Role.add("seller");
+        SignupRequest input = new SignupRequest();
+        Long id  = 1L;
+        input.setUsername("vineet");
+        input.setAccount_status("0");
+        input.setPassword("12345678");
+        input.setEmail("vineet@gmail.com");
+        input.setRole(Role);
+        input.setAccount_status("0");
+        input.setActive("1");
+        input.setAddress("sneha sadan");
+        input.setMobile("989333232");
+        input.setFirst_name("vineet");
+        input.setLast_name("tiwari");
+        String role = "2";
+        User user = new User(input.getUsername(), input.getEmail(), this.encoder.encode(input.getPassword()), input.getFirst_name(), input.getLast_name(), input.getAddress(), input.getMobile(), input.getActive(), input.getAccount_status(), role);
+
+        this.undertest1.registerUser(input);
+        this.userRepository.save(user);
+        verify(userRepository).save(user);
+
+        this.undertest.deletePendingSeller(id);
+        verify(userRepository).findById(id);
+
     }
 
     @Test
     void approveSeller() {
+        List<String> Role = new ArrayList();
+        Role.add("seller");
+        SignupRequest input = new SignupRequest();
+        Long id  = 1L;
+        input.setUsername("vineet");
+        input.setAccount_status("0");
+        input.setPassword("12345678");
+        input.setEmail("vineet@gmail.com");
+        input.setRole(Role);
+        input.setAccount_status("0");
+        input.setActive("1");
+        input.setAddress("sneha sadan");
+        input.setMobile("989333232");
+        input.setFirst_name("vineet");
+        input.setLast_name("tiwari");
+        String role = "2";
+        User user = new User(input.getUsername(), input.getEmail(), this.encoder.encode(input.getPassword()), input.getFirst_name(), input.getLast_name(), input.getAddress(), input.getMobile(), input.getActive(), input.getAccount_status(), role);
+
+        this.undertest1.registerUser(input);
+        this.userRepository.save(user);
+        verify(userRepository).save(user);
+
+        this.undertest.approveSeller(id);
+        verify(userRepository).findById(id);
+
+
     }
 }

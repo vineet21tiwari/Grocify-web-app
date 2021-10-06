@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -117,11 +118,19 @@ public class CustomerController {
        User user = userRepository.findByUsername(username).get();
        List<User> sellers = (List<User>) userRepository.findAllByRoleAndAddress("2",user.getAddress());
        //List<ShopsResponse> shopsResponse;
+       List<User> user1 = new ArrayList<User>();
+       if(user!=null){
+           for(int i=0;i< sellers.size();i++){
+               if(Objects.equals(sellers.get(i).getActive(), "1") && Objects.equals(sellers.get(i).getAccount_status(), "1")){
+                   user1.add(sellers.get(i));
+               }
+           }}
+
        List<ShopsResponse> shopsResponse = new ArrayList<ShopsResponse>();
 
-       for (int i = 0; i < sellers.size(); i++) {
-           ShopsResponse response = new ShopsResponse(sellers.get(i).getId(), sellers.get(i).getShopname(),
-                   sellers.get(i).getMobile(),sellers.get(i).getFirst_name(),sellers.get(i).getLast_name());
+       for (int i = 0; i < user1.size(); i++) {
+           ShopsResponse response = new ShopsResponse(user1.get(i).getId(), user1.get(i).getShopname(),
+                   user1.get(i).getMobile(),user1.get(i).getFirst_name(),user1.get(i).getLast_name());
            shopsResponse.add(response);
        }
        return ResponseEntity.ok(shopsResponse);

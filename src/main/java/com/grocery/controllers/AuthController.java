@@ -155,10 +155,15 @@ public class AuthController {
   public ResponseEntity<?> sellerSignupAddItem(@PathVariable("id") Long id,@Valid @RequestBody SellerSignupAddItem sellerSignupAddItem) {
     Product product = new Product(sellerSignupAddItem.getShopname(),sellerSignupAddItem.getItemname(),
             sellerSignupAddItem.getItemprice(),id);
-    User user = userRepository.findById(id).get();
-    user.setShopname(sellerSignupAddItem.getShopname());
-    userRepository.save(user);
-    productRepository.save(product);
+    User user;
+    if(userRepository.findById(id).isPresent()){
+      user = userRepository.findById(id).get();
+      user.setShopname(sellerSignupAddItem.getShopname());
+      userRepository.save(user);
+      productRepository.save(product);}
+    else
+    { user = null;}
+
 
     return ResponseEntity.ok(new MessageResponse("Register Successfully, please wait for approval from Admin."));
   }

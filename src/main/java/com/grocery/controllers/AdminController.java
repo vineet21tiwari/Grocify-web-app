@@ -172,51 +172,84 @@ public class AdminController {
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> allPendingSellers() {
         List<User> user = userRepository.findAllByRoleAndAccount_status("2","0");
-        List<AllUsersResponse> response=new ArrayList<AllUsersResponse>();;
+        List<User> user1 = new ArrayList<User>();
         if(user!=null){
-        for(int i=0;i< user.size();i++){
-            response.add(new AllUsersResponse(user.get(i).getId(),user.get(i).getUsername(),user.get(i).getFirst_name(),
-                    user.get(i).getLast_name()));
-        }}
+            for(int i=0;i< user.size();i++){
+                if(Objects.equals(user.get(i).getActive(), "1")){
+                    user1.add(user.get(i));
+                }
+            }}
+        List<AllUsersResponse> response=new ArrayList<AllUsersResponse>();;
+        for(int i=0;i< user1.size();i++){
+            response.add(new AllUsersResponse(user1.get(i).getId(),user1.get(i).getUsername(),user1.get(i).getFirst_name(),
+                    user1.get(i).getLast_name()));
+        }
         return ResponseEntity.ok(response);
+
     }
 
     @GetMapping("/admin/pending/items/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> pendingSellerItemDetails(@PathVariable("id") Long id) {
-        User user = userRepository.findById(id).get();
-        List<Product> product = productRepository.findAllByUserid(id);
-        return ResponseEntity.ok(product);
+        User user;
+        if(userRepository.findById(id).isPresent()){
+            user = userRepository.findById(id).get();
+            List<Product> product = productRepository.findAllByUserid(id);
+            return ResponseEntity.ok(product);}
+        else
+        { user = null;}
+        return ResponseEntity.ok(new MessageResponse("User not found"));
     }
+
     @GetMapping("/admin/pending/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> pendingSellerDetails(@PathVariable("id") Long id) {
-        User user = userRepository.findById(id).get();
+        User user;
+        if(userRepository.findById(id).isPresent()){
+            user = userRepository.findById(id).get();}
+        else
+        { user = null;}
+        if(SecurityContextHolder.getContext().getAuthentication()!=null){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
         List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
                 .collect(Collectors.toList());
         return ResponseEntity.ok(new AccountDetailsResponse(user.getId(), user.getUsername(), user.getFirst_name(),
                 user.getLast_name(), user.getEmail(), user.getMobile(), user.getAddress(), user.getAccount_status(),
-                user.getActive(), roles));
+                user.getActive(), roles));}
+        else
+            return ResponseEntity.ok(new MessageResponse("user not found"));
 
     }
     @PutMapping("/admin/pending/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deletePendingSeller(@PathVariable("id") Long id) {
-        User user = userRepository.findById(id).get();
-        user.setActive("0");
-        userRepository.save(user);
-        return ResponseEntity.ok(new MessageResponse("User Deleted successfully!"));
+
+        User user;
+        if(userRepository.findById(id).isPresent()){
+            user = userRepository.findById(id).get();
+            user.setActive("0");
+            userRepository.save(user);
+            return ResponseEntity.ok(new MessageResponse("User Deleted successfully!"));}
+        else
+        { user = null;}
+        return ResponseEntity.ok(new MessageResponse("User not found"));
+
     }
 
     @PutMapping("/admin/approve/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> approveSeller(@PathVariable("id") Long id) {
-        User user = userRepository.findById(id).get();
-        user.setAccount_status("1");
-        userRepository.save(user);
-        return ResponseEntity.ok(new MessageResponse("User Approved successfully!"));
+        User user;
+        if(userRepository.findById(id).isPresent()){
+            user = userRepository.findById(id).get();
+            user.setAccount_status("1");
+            userRepository.save(user);
+            return ResponseEntity.ok(new MessageResponse("User Approved successfully!"));}
+        else
+        { user = null;}
+        return ResponseEntity.ok(new MessageResponse("User not found"));
+
     }
 
 

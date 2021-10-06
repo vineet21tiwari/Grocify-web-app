@@ -26,6 +26,8 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import static org.mockito.Mockito.verify;
+
 @ExtendWith({MockitoExtension.class})
 class AuthControllerTest {
 
@@ -138,20 +140,18 @@ class AuthControllerTest {
 
     @Test
     void sellerSignupAddItem() {
-//        Long id = 1L;
-//        SellerSignupAddItem input = new SellerSignupAddItem();
-//        input.setId(1L);
-//        input.setShopname("bikaner");
-//        input.setItemname("rice");
-//        input.setItemprice("400");
-//
-//        Product product = new Product(input.getShopname(),input.getItemname(),input.getItemprice(),id);
-//        product.setId(1L);
-//        BDDMockito.given(this.userRepository.existsByUsername(ArgumentMatchers.anyString())).willReturn(false);
-//        BDDMockito.given(this.userRepository.existsByEmail(ArgumentMatchers.anyString())).willReturn(false);
-//        BDDMockito.given(this.userRepository.existsById(ArgumentMatchers.anyLong())).willReturn(false);
-//        this.undertest.sellerSignupAddItem(id,input);
-//        productRepository.save(product);
+        Long id = 1L;
+        SellerSignupAddItem input = new SellerSignupAddItem();
+        input.setId(1L);
+        input.setShopname("bikaner");
+        input.setItemname("rice");
+        input.setItemprice("400");
+
+        Product product = new Product(input.getShopname(),input.getItemname(),input.getItemprice(),id);
+
+        this.undertest.sellerSignupAddItem(id,input);
+        this.productRepository.save(product);
+        verify(productRepository).save(product);
 
 
     }
