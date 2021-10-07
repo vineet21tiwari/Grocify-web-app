@@ -25,7 +25,9 @@ import org.mockito.BDDMockito;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.web.client.ExpectedCount;
 
+import static net.bytebuddy.matcher.ElementMatchers.any;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith({MockitoExtension.class})
@@ -53,12 +55,12 @@ class AuthControllerTest {
         this.undertest = new AuthController(this.userRepository,  this.roleRepository,this.encoder);
     }
 
-//    @AfterEach
-//    void tearDown() {
-//        this.userRepository.deleteAll();
-//        this.roleRepository.deleteAll();
-//        this.productRepository.deleteAll();
-//    }
+    @AfterEach
+    void tearDown() {
+        this.userRepository.deleteAll();
+        this.roleRepository.deleteAll();
+        this.productRepository.deleteAll();
+    }
 
 
     @Test
@@ -85,6 +87,8 @@ class AuthControllerTest {
         BDDMockito.given(this.userRepository.existsByEmail(ArgumentMatchers.anyString())).willReturn(false);
         this.undertest.registerUser(input);
         this.userRepository.save(user);
+
+        verify(userRepository).save(user);
     }
     @Test
     void registerUser2() {
@@ -110,6 +114,7 @@ class AuthControllerTest {
         BDDMockito.given(this.userRepository.existsByEmail(ArgumentMatchers.anyString())).willReturn(false);
         this.undertest.registerUser(input);
         this.userRepository.save(user);
+        verify(userRepository).save(user);
     }
     @Test
     void registerUser3() {
@@ -135,6 +140,7 @@ class AuthControllerTest {
         BDDMockito.given(this.userRepository.existsByEmail(ArgumentMatchers.anyString())).willReturn(false);
         this.undertest.registerUser(input);
         this.userRepository.save(user);
+        verify(userRepository).save(user);
     }
 
 
