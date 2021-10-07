@@ -13,6 +13,7 @@ import com.grocery.payload.response.user_response.AccountDetailsResponse;
 import com.grocery.payload.response.auth_response.MessageResponse;
 import com.grocery.payload.response.user_response.ShowItemDetailsResponse;
 import com.grocery.payload.response.user_response.ShowItemResponse;
+import com.grocery.repository.CartRepository;
 import com.grocery.repository.ProductRepository;
 import com.grocery.repository.UserRepository;
 import com.grocery.security.jwt.JwtUtils;
@@ -46,6 +47,21 @@ public class SellerController {
 
 	@Autowired
 	ProductRepository productRepository;
+
+	@Autowired
+	CartRepository cartRepository;
+
+	public SellerController(AuthenticationManager authenticationManager,
+							JwtUtils jwtUtils,
+							UserRepository userRepository,
+							ProductRepository productRepository,CartRepository cartRepository) {
+		this.authenticationManager = authenticationManager;
+		this.jwtUtils = jwtUtils;
+		this.userRepository = userRepository;
+		this.productRepository = productRepository;
+		this.cartRepository = cartRepository;
+	}
+
 
 
 	@GetMapping("/seller")

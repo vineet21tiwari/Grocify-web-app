@@ -1,6 +1,7 @@
 package com.grocery.repository;
 
 import com.grocery.models.Product;
+import org.mockito.ArgumentCaptor;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -11,6 +12,8 @@ import java.util.Optional;
 public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAllByUserid(Long userid);
     Optional<Product> findById(Long id);
+
+    List<Product> findAllByUserid(ArgumentCaptor<Long> userid);
 
 
     Optional<Product> findByUserid(Long userid);
