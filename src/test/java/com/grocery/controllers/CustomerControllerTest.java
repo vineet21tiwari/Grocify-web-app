@@ -75,7 +75,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    void accountDetails() {
+    void checkAccountDetails() {
         List<String> Role = new ArrayList();
         Role.add("buyer");
         SignupRequest input = new SignupRequest();
@@ -108,7 +108,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    void updateDetails() {
+    void checkUpdateDetails() {
         List<String> Role = new ArrayList();
         Role.add("buyer");
         SignupRequest input = new SignupRequest();
@@ -148,7 +148,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    void deleteAccount() {
+    void checkDeleteAccount() {
         List<String> Role = new ArrayList();
         Role.add("buyer");
         SignupRequest input = new SignupRequest();
@@ -176,7 +176,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    void showShops() {
+    void checkShowShops() {
         List<String> Role = new ArrayList();
         Role.add("seller");
         SignupRequest input = new SignupRequest();
@@ -243,7 +243,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    void addToCart() {
+    void checkAddToCart() {
         List<String> Role = new ArrayList();
         Role.add("seller");
         SignupRequest input = new SignupRequest();
@@ -286,7 +286,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    void showCartItems() {
+    void checkShowCartItems() {
         Cart cart = new Cart("bikaner","paneer","450",1L,"4");
         this.cartRepository.save(cart);
         this.cartRepository.findAllByUserid(1L);
@@ -297,7 +297,7 @@ class CustomerControllerTest {
     }
 
     @Test
-    void deleteItemFromCart() {
+    void checkDeleteItemFromCart() {
         Cart cart = new Cart("bikaner","paneer","450",1L,"4");
         this.cartRepository.save(cart);
         this.cartRepository.delete(cart);

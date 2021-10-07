@@ -64,7 +64,7 @@ class AuthControllerTest {
 
 
     @Test
-    void registerUser1() {
+    void checkRegisterUser1() {
 
         List<String> Role = new ArrayList();
         Role.add("seller");
@@ -91,7 +91,7 @@ class AuthControllerTest {
         verify(userRepository).save(user);
     }
     @Test
-    void registerUser2() {
+    void checkRegisterUser2() {
 
         List<String> Role = new ArrayList();
         Role.add("admin");
@@ -117,7 +117,7 @@ class AuthControllerTest {
         verify(userRepository).save(user);
     }
     @Test
-    void registerUser3() {
+    void checkRegisterUser3() {
 
         List<String> Role = new ArrayList();
         Role.add("customer");
@@ -145,7 +145,7 @@ class AuthControllerTest {
 
 
     @Test
-    void sellerSignupAddItem() {
+    void checkSellerSignupAddItem() {
         Long id = 1L;
         SellerSignupAddItem input = new SellerSignupAddItem();
         input.setId(1L);

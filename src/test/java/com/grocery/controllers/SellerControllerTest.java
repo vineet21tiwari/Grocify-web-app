@@ -79,7 +79,7 @@ class SellerControllerTest {
     }
 
     @Test
-    void accountDetails() {
+    void checkAccountDetails() {
         Long id = 1L;
         this.undertest.accountDetails();
         this.userRepository.findById(id);
@@ -90,7 +90,7 @@ class SellerControllerTest {
     }
 
     @Test
-    void updateDetails() {
+    void checkUpdateDetails() {
         Long id = 1L;
         EditAccountDetailsRequest editAccountDetailsRequest = new EditAccountDetailsRequest();
         editAccountDetailsRequest.setUsername("sunil");
@@ -106,7 +106,7 @@ class SellerControllerTest {
     }
 
     @Test
-    void deleteAccount() {
+    void checkDeleteAccount() {
         Long id = 1L;
         this.undertest.deleteAccount();
         this.userRepository.deleteById(id);
@@ -119,7 +119,7 @@ class SellerControllerTest {
     }
 
     @Test
-    void addItem() {
+    void checkAddItem() {
         Long id = 1L;
         AddItemRequest addItemRequest = new AddItemRequest();
         addItemRequest.setShopname("bikaner");
@@ -139,7 +139,7 @@ class SellerControllerTest {
     }
 
     @Test
-    void showItemsDetails() {
+    void checkShowItemsDetails() {
         this.undertest.showItemsDetails();
         this.productRepository.findAllByUserid(1L);
         verify(productRepository).findAllByUserid(1L);
@@ -147,7 +147,7 @@ class SellerControllerTest {
     }
 
     @Test
-    void showItem() {
+    void checkShowItem() {
         Long id = 1L;
         this.undertest.showItem(id);
         this.productRepository.findByIdAndUserid(1L,1L);
@@ -156,7 +156,7 @@ class SellerControllerTest {
     }
 
     @Test
-    void editItemDetails() {
+    void checkEditItemDetails() {
         Long id = 1L;
         EditItemDetailsRequest editItemDetailsRequest = new EditItemDetailsRequest();
 
@@ -180,7 +180,7 @@ class SellerControllerTest {
     }
 
     @Test
-    void deleteItem() {
+    void checkDeleteItem() {
         Long id = 1L;
         this.undertest.deleteItem(id);
         this.productRepository.deleteById(id);

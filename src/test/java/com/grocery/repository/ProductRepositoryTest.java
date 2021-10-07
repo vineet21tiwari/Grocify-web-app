@@ -21,7 +21,7 @@ class ProductRepositoryTest {
 
 
     @Test
-    void findByIdAndUserid() {
+    void checkFindByIdAndUserid() {
         //given
         Product product = new Product("bikaner","rice","400",1L);
         undertest.save(product);

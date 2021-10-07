@@ -21,7 +21,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    void findById() {
+    void checkFindById() {
         //given
         String email = "vineet@gmail.com";
         User user = new User("vineet",email,
@@ -38,7 +38,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    void findByUsername() {
+    void checkFindByUsername() {
         String username = "vineet";
         User user = new User("vineet","vineet@gmail.com",
                 "12345678","vineet",

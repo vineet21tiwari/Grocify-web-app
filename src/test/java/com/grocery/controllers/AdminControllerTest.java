@@ -78,7 +78,7 @@ class AdminControllerTest {
 
 
     @Test
-    void aLLBuyers() {
+    void checkAllBuyers() {
         List<String> Role = new ArrayList();
         Role.add("seller");
         SignupRequest input = new SignupRequest();
@@ -111,7 +111,7 @@ class AdminControllerTest {
     }
 
     @Test
-    void buyerDetails() {
+    void checkBuyerDetails() {
 
         List<String> Role = new ArrayList();
         Role.add("buyer");
@@ -140,7 +140,7 @@ class AdminControllerTest {
     }
 
     @Test
-    void deletebuyer() {
+    void checkDeletebuyer() {
         List<String> Role = new ArrayList();
         Role.add("buyer");
         SignupRequest input = new SignupRequest();
@@ -168,7 +168,7 @@ class AdminControllerTest {
     }
 
     @Test
-    void aLLSellers() {
+    void checkAllSellers() {
         List<String> Role = new ArrayList();
         Role.add("seller");
         SignupRequest input = new SignupRequest();
@@ -198,7 +198,7 @@ class AdminControllerTest {
     }
 
     @Test
-    void sellerDetails() {
+    void checkSellerDetails() {
         List<String> Role = new ArrayList();
         Role.add("seller");
         SignupRequest input = new SignupRequest();
@@ -226,7 +226,7 @@ class AdminControllerTest {
     }
 
     @Test
-    void deleteSeller() {
+    void checkDeleteSeller() {
         List<String> Role = new ArrayList();
         Role.add("buyer");
         SignupRequest input = new SignupRequest();
@@ -255,7 +255,7 @@ class AdminControllerTest {
     }
 
     @Test
-    void sellerItemDetails() {
+    void checkSellerItemDetails() {
         List<String> Role = new ArrayList();
         Role.add("seller");
         SignupRequest input = new SignupRequest();
@@ -291,7 +291,7 @@ class AdminControllerTest {
     }
 
     @Test
-    void allPendingSellers() {
+    void checkAllPendingSellers() {
         List<String> Role = new ArrayList();
         Role.add("seller");
         SignupRequest input = new SignupRequest();
@@ -328,7 +328,7 @@ class AdminControllerTest {
     }
 
     @Test
-    void pendingSellerItemDetails() {
+    void checkPendingSellerItemDetails() {
         List<String> Role = new ArrayList();
         Role.add("seller");
         SignupRequest input = new SignupRequest();
@@ -364,7 +364,7 @@ class AdminControllerTest {
     }
 
     @Test
-    void pendingSellerDetails() {
+    void checkPendingSellerDetails() {
         List<String> Role = new ArrayList();
         Role.add("seller");
         SignupRequest input = new SignupRequest();
@@ -393,7 +393,7 @@ class AdminControllerTest {
     }
 
     @Test
-    void deletePendingSeller() {
+    void checkDeletePendingSeller() {
         List<String> Role = new ArrayList();
         Role.add("seller");
         SignupRequest input = new SignupRequest();
@@ -422,7 +422,7 @@ class AdminControllerTest {
     }
 
     @Test
-    void approveSeller() {
+    void checkApproveSeller() {
         List<String> Role = new ArrayList();
         Role.add("seller");
         SignupRequest input = new SignupRequest();
