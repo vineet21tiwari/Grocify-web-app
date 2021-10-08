@@ -1,18 +1,16 @@
 package com.grocery.controllers;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
+import com.grocery.models.Cart;
 import com.grocery.models.Product;
 import com.grocery.models.User;
 import com.grocery.payload.request.user_request.AddItemRequest;
 import com.grocery.payload.request.user_request.EditItemDetailsRequest;
 import com.grocery.payload.request.user_request.EditAccountDetailsRequest;
-import com.grocery.payload.response.user_response.AccountDetailsResponse;
+import com.grocery.payload.response.user_response.*;
 import com.grocery.payload.response.auth_response.MessageResponse;
-import com.grocery.payload.response.user_response.ShowItemDetailsResponse;
-import com.grocery.payload.response.user_response.ShowItemResponse;
 import com.grocery.repository.CartRepository;
 import com.grocery.repository.ProductRepository;
 import com.grocery.repository.UserRepository;
@@ -224,4 +222,62 @@ public class SellerController {
 		}
 		return ResponseEntity.notFound().build();
 	}
+
+	@GetMapping("/seller/transactions")
+	@PreAuthorize("hasRole('SELLER')")
+	public ResponseEntity<?> showTransactions() {
+		if(SecurityContextHolder.getContext().getAuthentication()!=null) {
+			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String username = userDetails.getUsername();
+			User user = userRepository.findByUsername(username).get();
+			if (Objects.equals(user.getActive(), "1")) {
+				List<Cart> cart = cartRepository.findAllByShopname(user.getShopname());
+
+				Set<Long> buyerId = new HashSet<Long>();
+				for(int i=0;i< cart.size();i++){
+					buyerId.add(cart.get(i).getUserid());
+				}
+
+				List<SellerTransactionResponse> response = new ArrayList<SellerTransactionResponse>();
+				for (Long value : buyerId) {
+					User user1 = userRepository.findById(value).get();
+					response.add(new SellerTransactionResponse(user1.getId(),user1.getFirst_name(),
+							user1.getLast_name(),user1.getEmail(),user1.getMobile()));
+				}
+				return ResponseEntity.ok(response);
+				}
+
+			else
+				return ResponseEntity.badRequest().body(new MessageResponse("Your account has deleted"));
+		}
+		else
+			return ResponseEntity.notFound().build();
+	}
+	@GetMapping("/seller/transactions/{id}")
+	@PreAuthorize("hasRole('SELLER')")
+	public ResponseEntity<?> showTransactions(@PathVariable("id") Long id) {
+		if(SecurityContextHolder.getContext().getAuthentication()!=null) {
+			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			String username = userDetails.getUsername();
+			User user = userRepository.findByUsername(username).get();
+			if (Objects.equals(user.getActive(), "1")) {
+				List<Cart> cart = cartRepository.findAllByUserid(id);
+				Long total = 0L;
+				for(int i=0;i< cart.size();i++){
+					Long item_price = Long.parseLong(cart.get(i).getItemprice());
+					Long quantity = Long.parseLong(cart.get(i).getQuantity());
+					total = total + item_price*quantity;
+				}
+				ShowCartItemsResponse show = new ShowCartItemsResponse(cart,total);
+				return ResponseEntity.ok(show);
+			}
+			else
+				return ResponseEntity.badRequest().body(new MessageResponse("Your account has deleted"));
+		}
+		else
+			return ResponseEntity.notFound().build();
+	}
+
+
+
 }
