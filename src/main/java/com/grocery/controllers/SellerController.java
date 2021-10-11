@@ -61,7 +61,6 @@ public class SellerController {
 	}
 
 
-
 	@GetMapping("/seller")
 	@PreAuthorize("hasRole('SELLER')")
 	public ResponseEntity<?> accountDetails() {
@@ -277,6 +276,7 @@ public class SellerController {
 		else
 			return ResponseEntity.notFound().build();
 	}
+
 
 
 

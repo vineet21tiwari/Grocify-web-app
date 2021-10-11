@@ -261,7 +261,7 @@ public class CustomerController {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             String username = userDetails.getUsername();
             User user = userRepository.findByUsername(username).get();
-            Cart cart = cartRepository.findByIdAndUserid(id, id).get();
+            Cart cart = cartRepository.findByIdAndUserid(id, user.getId()).get();
             if (cart != null) {
                 cartRepository.delete(cart);
                 return ResponseEntity.ok(new MessageResponse("Item deleted successfully!"));
@@ -271,6 +271,7 @@ public class CustomerController {
         else
             return ResponseEntity.notFound().build();
     }
+
 
 
 
