@@ -81,7 +81,7 @@ class SellerControllerTest {
     @Test
     void checkAccountDetails() {
         Long id = 1L;
-        this.undertest.accountDetails();
+        this.undertest.accountDetails("Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         this.userRepository.findById(id);
         ArgumentCaptor<Long> id1 = ArgumentCaptor.forClass(Long.class);
         verify(userRepository).findById(id1.capture());
@@ -99,7 +99,7 @@ class SellerControllerTest {
         editAccountDetailsRequest.setLast_name("tomar");
         editAccountDetailsRequest.setAddress("jabalpur");
         editAccountDetailsRequest.setMobile("89822210101");
-        undertest.updateDetails(editAccountDetailsRequest);
+        undertest.updateDetails(editAccountDetailsRequest,"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         this.userRepository.findByUsername("sunil");
         verify(userRepository).findByUsername("sunil");
 
@@ -108,7 +108,7 @@ class SellerControllerTest {
     @Test
     void checkDeleteAccount() {
         Long id = 1L;
-        this.undertest.deleteAccount();
+        this.undertest.deleteAccount("Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         this.userRepository.deleteById(id);
         //then
         ArgumentCaptor<Long> studentArgumentCaptor = ArgumentCaptor.forClass(Long.class);
@@ -126,7 +126,7 @@ class SellerControllerTest {
         addItemRequest.setItemname("paneer");
         addItemRequest.setItemprice("150");
 
-        undertest.addItem(addItemRequest);
+        undertest.addItem(addItemRequest,"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         Product product = new Product(addItemRequest.getShopname(),addItemRequest.getItemname(),
                 addItemRequest.getItemprice(),id);
         this.productRepository.save(product);
@@ -140,7 +140,7 @@ class SellerControllerTest {
 
     @Test
     void checkShowItemsDetails() {
-        this.undertest.showItemsDetails();
+        this.undertest.showItemsDetails("Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         this.productRepository.findAllByUserid(1L);
         verify(productRepository).findAllByUserid(1L);
 
@@ -149,7 +149,7 @@ class SellerControllerTest {
     @Test
     void checkShowItem() {
         Long id = 1L;
-        this.undertest.showItem(id);
+        this.undertest.showItem(id,"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         this.productRepository.findByIdAndUserid(1L,1L);
         verify(productRepository).findByIdAndUserid(1L,1L);
 
@@ -162,7 +162,7 @@ class SellerControllerTest {
 
         editItemDetailsRequest.setItemname("rice");
         editItemDetailsRequest.setItemprice("350");
-        this.undertest.editItemDetails(id,editItemDetailsRequest);
+        this.undertest.editItemDetails(id,editItemDetailsRequest,"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         Product product = new Product();
         product.setItemprice(editItemDetailsRequest.getItemprice());
         product.setItemprice(editItemDetailsRequest.getItemprice());
@@ -182,7 +182,7 @@ class SellerControllerTest {
     @Test
     void checkDeleteItem() {
         Long id = 1L;
-        this.undertest.deleteItem(id);
+        this.undertest.deleteItem(id,"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         this.productRepository.deleteById(id);
         //then
         ArgumentCaptor<Long> item = ArgumentCaptor.forClass(Long.class);

@@ -99,7 +99,7 @@ class CustomerControllerTest {
         this.userRepository.save(user);
         verify(userRepository).save(user);
 
-        this.undertest.accountDetails();
+        this.undertest.accountDetails("Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         this.userRepository.findByUsername("vineet");
         this.userRepository.findByUsername("Rahul");
         verify(userRepository).findByUsername("vineet");
@@ -141,7 +141,7 @@ class CustomerControllerTest {
         editAccountDetailsRequest.setMobile("99994949494");
 
 
-        this.undertest.updateDetails(editAccountDetailsRequest);
+        this.undertest.updateDetails(editAccountDetailsRequest,"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         verify(userRepository).save(user);
 
 
@@ -171,7 +171,7 @@ class CustomerControllerTest {
         this.userRepository.save(user);
         verify(userRepository).save(user);
 
-        this.undertest.deleteAccount();
+        this.undertest.deleteAccount("Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         verify(userRepository).save(user);
     }
 
@@ -201,7 +201,7 @@ class CustomerControllerTest {
         verify(userRepository).save(user);
         this.userRepository.findAllByRoleAndAddress("2","sneha sadan");
 
-        this.undertest.showShops();
+        this.undertest.showShops("Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         verify(userRepository).findAllByRoleAndAddress("2","sneha sadan");
     }
 
@@ -237,7 +237,7 @@ class CustomerControllerTest {
         this.productRepository.findAllByUserid(id);
         verify(userRepository).save(user);
 
-        this.undertest.showShopDetail(id);
+        this.undertest.showShopDetail(id,"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         verify(productRepository).findAllByUserid(id);
 
     }
@@ -279,7 +279,7 @@ class CustomerControllerTest {
         Cart cart = new Cart(product.getShopname(), product.getItemname(), product.getItemprice(), product.getUserid(),
                           addToCartRequest.getQuantity()) ;
 
-        this.undertest.addToCart(id,addToCartRequest);
+        this.undertest.addToCart(id,addToCartRequest,"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         this.cartRepository.save(cart);
         verify(cartRepository).save(cart);
 

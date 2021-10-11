@@ -56,7 +56,7 @@ public class AdminController {
 
     @GetMapping("/admin/buyers")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> aLLBuyers() {
+    public ResponseEntity<?> aLLBuyers(@RequestHeader("Authorization") String authorization) {
         List<User> user = userRepository.findAllByRoleAndActive("1","1");
         List<AllUsersResponse> response=new ArrayList<AllUsersResponse>();
         if(user!=null){
@@ -68,7 +68,7 @@ public class AdminController {
     }
     @GetMapping("/admin/buyers/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> buyerDetails(@PathVariable("id") Long id) {
+    public ResponseEntity<?> buyerDetails(@PathVariable("id") Long id,@RequestHeader("Authorization") String authorization) {
         User user;
         if(userRepository.findById(id).isPresent()){
             user = userRepository.findById(id).get();}
@@ -89,7 +89,7 @@ public class AdminController {
 
     @PutMapping("/admin/buyers/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deletebuyer(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deletebuyer(@PathVariable("id") Long id,@RequestHeader("Authorization") String authorization) {
         User user;
         if(userRepository.findById(id).isPresent()){
             user = userRepository.findById(id).get();
@@ -103,7 +103,7 @@ public class AdminController {
 
     @GetMapping("/admin/sellers")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> aLLSellers() {
+    public ResponseEntity<?> aLLSellers(@RequestHeader("Authorization") String authorization) {
         List<User> user = userRepository.findAllByRoleAndAccount_status("2","1");
         List<User> user1 = new ArrayList<User>();
         if(user!=null){
@@ -121,7 +121,7 @@ public class AdminController {
     }
     @GetMapping("/admin/sellers/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> sellerDetails(@PathVariable("id") Long id) {
+    public ResponseEntity<?> sellerDetails(@PathVariable("id") Long id,@RequestHeader("Authorization") String authorization) {
         User user;
         if(userRepository.findById(id).isPresent()){
             user = userRepository.findById(id).get();}
@@ -141,7 +141,7 @@ public class AdminController {
     }
     @PutMapping("/admin/sellers/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deleteSeller(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteSeller(@PathVariable("id") Long id,@RequestHeader("Authorization") String authorization) {
         User user;
         if(userRepository.findById(id).isPresent()){
             user = userRepository.findById(id).get();
@@ -155,7 +155,7 @@ public class AdminController {
 
     @GetMapping("/admin/sellers/items/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> sellerItemDetails(@PathVariable("id") Long id) {
+    public ResponseEntity<?> sellerItemDetails(@PathVariable("id") Long id,@RequestHeader("Authorization") String authorization) {
         User user;
         if(userRepository.findById(id).isPresent()){
             user = userRepository.findById(id).get();
@@ -170,7 +170,7 @@ public class AdminController {
 
     @GetMapping("/admin/pending")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> allPendingSellers() {
+    public ResponseEntity<?> allPendingSellers(@RequestHeader("Authorization") String authorization) {
         List<User> user = userRepository.findAllByRoleAndAccount_status("2","0");
         List<User> user1 = new ArrayList<User>();
         if(user!=null){
@@ -190,7 +190,7 @@ public class AdminController {
 
     @GetMapping("/admin/pending/items/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> pendingSellerItemDetails(@PathVariable("id") Long id) {
+    public ResponseEntity<?> pendingSellerItemDetails(@PathVariable("id") Long id,@RequestHeader("Authorization") String authorization) {
         User user;
         if(userRepository.findById(id).isPresent()){
             user = userRepository.findById(id).get();
@@ -203,7 +203,7 @@ public class AdminController {
 
     @GetMapping("/admin/pending/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> pendingSellerDetails(@PathVariable("id") Long id) {
+    public ResponseEntity<?> pendingSellerDetails(@PathVariable("id") Long id,@RequestHeader("Authorization") String authorization) {
         User user;
         if(userRepository.findById(id).isPresent()){
             user = userRepository.findById(id).get();}
@@ -223,7 +223,7 @@ public class AdminController {
     }
     @PutMapping("/admin/pending/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> deletePendingSeller(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deletePendingSeller(@PathVariable("id") Long id,@RequestHeader("Authorization") String authorization) {
 
         User user;
         if(userRepository.findById(id).isPresent()){
@@ -239,7 +239,7 @@ public class AdminController {
 
     @PutMapping("/admin/approve/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<?> approveSeller(@PathVariable("id") Long id) {
+    public ResponseEntity<?> approveSeller(@PathVariable("id") Long id,@RequestHeader("Authorization") String authorization) {
         User user;
         if(userRepository.findById(id).isPresent()){
             user = userRepository.findById(id).get();

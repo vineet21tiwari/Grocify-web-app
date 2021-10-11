@@ -20,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
+
 @ExtendWith({MockitoExtension.class})
 class AdminControllerTest {
 
@@ -102,7 +104,8 @@ class AdminControllerTest {
         this.userRepository.save(user);
         verify(userRepository).save(user);
 
-        this.undertest.aLLBuyers();
+
+        this.undertest.aLLBuyers("Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         this.userRepository.findByUsername("vineet");
         verify(userRepository).findByUsername("vineet");
 
@@ -135,7 +138,7 @@ class AdminControllerTest {
         this.userRepository.save(user);
         verify(userRepository).save(user);
 
-        this.undertest.buyerDetails(id);
+        this.undertest.buyerDetails(id,"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         verify(userRepository).findById(id);
     }
 
@@ -162,7 +165,7 @@ class AdminControllerTest {
         this.userRepository.save(user);
         verify(userRepository).save(user);
 
-        this.undertest.deletebuyer(id);
+        this.undertest.deletebuyer(id,"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         verify(userRepository).save(user);
 
     }
@@ -192,7 +195,7 @@ class AdminControllerTest {
         this.userRepository.save(user);
         verify(userRepository).save(user);
 
-        this.undertest.aLLSellers();
+        this.undertest.aLLSellers("Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         verify(userRepository).findAllByRoleAndAccount_status("2","1");
 
     }
@@ -221,7 +224,7 @@ class AdminControllerTest {
         this.userRepository.save(user);
         verify(userRepository).save(user);
 
-        this.undertest.sellerDetails(id);
+        this.undertest.sellerDetails(id,"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         verify(userRepository).save(user);
     }
 
@@ -249,7 +252,7 @@ class AdminControllerTest {
         this.userRepository.save(user);
         verify(userRepository).save(user);
 
-        this.undertest.deleteSeller(id);
+        this.undertest.deleteSeller(id,"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         verify(userRepository).save(user);
 
     }
@@ -285,7 +288,7 @@ class AdminControllerTest {
         this.userRepository.save(user);
         verify(userRepository).save(user);
 
-        this.undertest.sellerItemDetails(id);
+        this.undertest.sellerItemDetails(id,"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         verify(userRepository).findById(id);
 
     }
@@ -322,7 +325,7 @@ class AdminControllerTest {
         this.userRepository.save(user);
         verify(userRepository).save(user);
 
-        this.undertest.allPendingSellers();
+        this.undertest.allPendingSellers("Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         verify(userRepository).findAllByRoleAndAccount_status("2","0");
 
     }
@@ -358,7 +361,7 @@ class AdminControllerTest {
         this.userRepository.save(user);
         verify(userRepository).save(user);
 
-        this.undertest.pendingSellerItemDetails(id);
+        this.undertest.pendingSellerItemDetails(id,"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         verify(userRepository).findById(id);
 
     }
@@ -387,7 +390,7 @@ class AdminControllerTest {
         this.userRepository.save(user);
         verify(userRepository).save(user);
 
-        this.undertest.pendingSellerDetails(id);
+        this.undertest.pendingSellerDetails(id,"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         verify(userRepository).findById(id);
 
     }
@@ -416,7 +419,7 @@ class AdminControllerTest {
         this.userRepository.save(user);
         verify(userRepository).save(user);
 
-        this.undertest.deletePendingSeller(id);
+        this.undertest.deletePendingSeller(id,"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         verify(userRepository).findById(id);
 
     }
@@ -445,7 +448,7 @@ class AdminControllerTest {
         this.userRepository.save(user);
         verify(userRepository).save(user);
 
-        this.undertest.approveSeller(id);
+        this.undertest.approveSeller(id,"Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjaGF5Iiwicm9sZSI6InNlbGxlciIsImV4cCI6MTYzMjkyNTkzNiwiaWF0IjoxNjMyOTIyMzM2fQ.urWWNBtfuwQ_iJT1tFFNTEeXnAo6JPH2FvVWvBApYVpE0ws0N8S1Y-n1wZuXb9siCljveVhkCgtouVmV6Pw7aw");
         verify(userRepository).findById(id);
 
 

@@ -63,7 +63,7 @@ public class SellerController {
 
 	@GetMapping("/seller")
 	@PreAuthorize("hasRole('SELLER')")
-	public ResponseEntity<?> accountDetails() {
+	public ResponseEntity<?> accountDetails(@RequestHeader("Authorization") String authorization) {
 		if(SecurityContextHolder.getContext().getAuthentication()!=null) {
 		UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		String username = userDetails.getUsername();
@@ -85,7 +85,7 @@ public class SellerController {
 
 	@PutMapping("/seller")
 	@PreAuthorize("hasRole('SELLER')")
-	public ResponseEntity<?> updateDetails(@Valid @RequestBody EditAccountDetailsRequest editAccountDetailsRequest){
+	public ResponseEntity<?> updateDetails(@Valid @RequestBody EditAccountDetailsRequest editAccountDetailsRequest,@RequestHeader("Authorization") String authorization){
 		if(SecurityContextHolder.getContext().getAuthentication()!=null) {
 			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String username = userDetails.getUsername();
@@ -108,7 +108,7 @@ public class SellerController {
 
 	@PutMapping("/seller/delete")
 	@PreAuthorize("hasRole('SELLER')")
-	public ResponseEntity<?> deleteAccount(){
+	public ResponseEntity<?> deleteAccount(@RequestHeader("Authorization") String authorization){
 		if(SecurityContextHolder.getContext().getAuthentication()!=null) {
 			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String username = userDetails.getUsername();
@@ -127,7 +127,7 @@ public class SellerController {
 
 	@PostMapping("/seller/items")
 	@PreAuthorize("hasRole('SELLER')")
-	public ResponseEntity<?> addItem(@Valid @RequestBody AddItemRequest addItemRequest){
+	public ResponseEntity<?> addItem(@Valid @RequestBody AddItemRequest addItemRequest,@RequestHeader("Authorization") String authorization){
 		if(SecurityContextHolder.getContext().getAuthentication()!=null) {
 			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String username = userDetails.getUsername();
@@ -147,7 +147,7 @@ public class SellerController {
 
 	@GetMapping("/seller/items")
 	@PreAuthorize("hasRole('SELLER')")
-	public ResponseEntity<?> showItemsDetails() {
+	public ResponseEntity<?> showItemsDetails(@RequestHeader("Authorization") String authorization) {
 		if(SecurityContextHolder.getContext().getAuthentication()!=null) {
 			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String username = userDetails.getUsername();
@@ -164,7 +164,7 @@ public class SellerController {
 
 	@GetMapping("/seller/items/{id}")
 	@PreAuthorize("hasRole('SELLER')")
-	public ResponseEntity<?> showItem(@PathVariable("id") Long id) {
+	public ResponseEntity<?> showItem(@PathVariable("id") Long id,@RequestHeader("Authorization") String authorization) {
 		if(SecurityContextHolder.getContext().getAuthentication()!=null) {
 			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String username = userDetails.getUsername();
@@ -181,7 +181,7 @@ public class SellerController {
 
 	@PutMapping("/seller/items/{id}")
 	@PreAuthorize("hasRole('SELLER')")
-	public ResponseEntity<?> editItemDetails(@PathVariable("id") Long id,@Valid @RequestBody EditItemDetailsRequest editItemDetailsRequest) {
+	public ResponseEntity<?> editItemDetails(@PathVariable("id") Long id,@Valid @RequestBody EditItemDetailsRequest editItemDetailsRequest,@RequestHeader("Authorization") String authorization) {
 		if(SecurityContextHolder.getContext().getAuthentication()!=null) {
 			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String username = userDetails.getUsername();
@@ -202,7 +202,7 @@ public class SellerController {
 
 	@DeleteMapping ("/seller/items/{id}")
 	@PreAuthorize("hasRole('SELLER')")
-	public ResponseEntity<?> deleteItem(@PathVariable("id") Long id) {
+	public ResponseEntity<?> deleteItem(@PathVariable("id") Long id,@RequestHeader("Authorization") String authorization) {
 		if(SecurityContextHolder.getContext().getAuthentication()!=null) {
 			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String username = userDetails.getUsername();
@@ -224,7 +224,7 @@ public class SellerController {
 
 	@GetMapping("/seller/transactions")
 	@PreAuthorize("hasRole('SELLER')")
-	public ResponseEntity<?> showTransactions() {
+	public ResponseEntity<?> showTransactions(@RequestHeader("Authorization") String authorization) {
 		if(SecurityContextHolder.getContext().getAuthentication()!=null) {
 			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String username = userDetails.getUsername();
@@ -254,7 +254,7 @@ public class SellerController {
 	}
 	@GetMapping("/seller/transactions/{id}")
 	@PreAuthorize("hasRole('SELLER')")
-	public ResponseEntity<?> showTransactions(@PathVariable("id") Long id) {
+	public ResponseEntity<?> showTransactions(@PathVariable("id") Long id,@RequestHeader("Authorization") String authorization) {
 		if(SecurityContextHolder.getContext().getAuthentication()!=null) {
 			UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 			String username = userDetails.getUsername();

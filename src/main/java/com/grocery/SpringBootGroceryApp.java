@@ -18,4 +18,5 @@ public class SpringBootGroceryApp extends SpringBootServletInitializer {
 //	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 //		return builder.sources(SpringBootGroceryApp.class);
 //	}
+
 }

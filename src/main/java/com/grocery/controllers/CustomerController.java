@@ -66,7 +66,7 @@ public class CustomerController {
 
     @GetMapping("/buyer")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<?> accountDetails() {
+    public ResponseEntity<?> accountDetails(@RequestHeader("Authorization") String authorization) {
         if(SecurityContextHolder.getContext().getAuthentication()!=null) {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             String username = userDetails.getUsername();
@@ -91,7 +91,7 @@ public class CustomerController {
 
     @PutMapping("/buyer")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<?> updateDetails(@Valid @RequestBody EditAccountDetailsRequest editAccountDetailsRequest){
+    public ResponseEntity<?> updateDetails(@Valid @RequestBody EditAccountDetailsRequest editAccountDetailsRequest,@RequestHeader("Authorization") String authorization){
         if(SecurityContextHolder.getContext().getAuthentication()!=null && editAccountDetailsRequest!=null) {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             String username = userDetails.getUsername();
@@ -121,7 +121,7 @@ public class CustomerController {
 
     @PutMapping("/buyer/delete")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<?> deleteAccount(){
+    public ResponseEntity<?> deleteAccount(@RequestHeader("Authorization") String authorization){
         if(SecurityContextHolder.getContext().getAuthentication()!=null){
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         String username = userDetails.getUsername();
@@ -140,7 +140,7 @@ public class CustomerController {
 
    @GetMapping("/buyer/shops")
    @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<?> showShops() {
+    public ResponseEntity<?> showShops(@RequestHeader("Authorization") String authorization) {
        if(SecurityContextHolder.getContext().getAuthentication()!=null) {
            UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
            String username = userDetails.getUsername();
@@ -176,7 +176,7 @@ public class CustomerController {
 
     @GetMapping("/buyer/shops/{id}")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<?> showShopDetail(@PathVariable("id") Long id) {
+    public ResponseEntity<?> showShopDetail(@PathVariable("id") Long id,@RequestHeader("Authorization") String authorization) {
         if(SecurityContextHolder.getContext().getAuthentication()!=null) {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             String username = userDetails.getUsername();
@@ -210,7 +210,7 @@ public class CustomerController {
 
     @PostMapping("/buyer/cart/{id}")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<?> addToCart(@PathVariable("id") Long id,@RequestBody AddToCartRequest addToCartRequest) {
+    public ResponseEntity<?> addToCart(@PathVariable("id") Long id,@RequestBody AddToCartRequest addToCartRequest,@RequestHeader("Authorization") String authorization) {
         if(SecurityContextHolder.getContext().getAuthentication()!=null) {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             String username = userDetails.getUsername();
@@ -231,7 +231,7 @@ public class CustomerController {
 
     @GetMapping("/buyer/cart/items")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<?> showCartItems() {
+    public ResponseEntity<?> showCartItems(@RequestHeader("Authorization") String authorization) {
         if(SecurityContextHolder.getContext().getAuthentication()!=null) {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             String username = userDetails.getUsername();
@@ -256,7 +256,7 @@ public class CustomerController {
 
     @DeleteMapping ("/buyer/cart/{id}")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<?> deleteItemFromCart(@PathVariable("id") Long id) {
+    public ResponseEntity<?> deleteItemFromCart(@PathVariable("id") Long id,@RequestHeader("Authorization") String authorization) {
         if(SecurityContextHolder.getContext().getAuthentication()!=null) {
             UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             String username = userDetails.getUsername();
